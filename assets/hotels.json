@@ -1,0 +1,72 @@
+[
+  {
+    "id": 0,
+    "name": "Elite Season Hotel & Spa",
+    "stars": 5,
+    "price": 210,
+    "category": ["family", "couples", "relax"]
+  },
+  {
+    "id": 1,
+    "name": "Triple Bliss Resort",
+    "stars": 4,
+    "price": 120,
+    "category": ["family", "couples", "relax"]
+  },
+  {
+    "id": 2,
+    "name": "Supreme Sword Hotel",
+    "stars": 3,
+    "price": 80,
+    "category": ["value", "family"]
+  },
+  {
+    "id": 3,
+    "name": "Brass Grove Hotel",
+    "stars": 4,
+    "price": 110,
+    "category": ["family"]
+  },
+  {
+    "id": 4,
+    "name": "Crimson Raven Hotel",
+    "stars": 2,
+    "price": 50,
+    "category": ["value", "couples", "centric"]
+  },
+  {
+    "id": 5,
+    "name": "Glorious Lake Motel",
+    "stars": 3,
+    "price": 60,
+    "category": ["value"]
+  },
+  {
+    "id": 6,
+    "name": "Curiosity Hotel",
+    "stars": 3,
+    "price": 75,
+    "category": ["family"]
+  },
+  {
+    "id": 7,
+    "name": "Parellel Resort & Spa",
+    "stars": 4,
+    "price": 160,
+    "category": ["couples"]
+  },
+  {
+    "id": 0,
+    "name": "Stardust Hotel",
+    "stars": 3,
+    "price": 65,
+    "category": ["family", "centric"]
+  },
+  {
+    "id": 8,
+    "name": "Orbit Motel",
+    "stars": 2,
+    "price": 35,
+    "category": ["couples", "value"]
+  }
+]

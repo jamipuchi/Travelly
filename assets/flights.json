@@ -1,0 +1,51 @@
+[
+    {
+      "name": "Roguebullet",
+      "price": "40",
+      "class": "economy",
+      "type": "direct"
+    },
+    {
+      "name": "Skyedge",
+      "price": "60",
+      "class": "economy",
+      "type": "1 stop"
+    },
+    {
+      "name": "Azureflight",
+      "price": "70",
+      "class": "economy",
+      "type": "1 stop"
+    },
+    {
+      "name": "Blind Hawk",
+      "price": "40",
+      "class": "economy",
+      "type": "direct"
+    },
+    {
+      "name": "Major Queen",
+      "price": "160",
+      "class": "business",
+      "type": "direct"
+    },
+    {
+      "name": "Agile Banshee",
+      "price": "120",
+      "class": "business",
+      "type": "1 stop"
+    },
+    {
+      "name": "Sky Owl",
+      "price": "280",
+      "class": "firstClass",
+      "type": "direct"
+    },
+    {
+      "name": "CloudStare",
+      "price": "300",
+      "class": "firstClass",
+      "type": "direct"
+    }
+  ]
+  

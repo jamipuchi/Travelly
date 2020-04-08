@@ -1,0 +1,32 @@
+export default {
+  hotels: [
+    require("./HotelImages/Hotel1.jpg"),
+    require("./HotelImages/Hotel2.jpg"),
+    require("./HotelImages/Hotel3.jpg"),
+    require("./HotelImages/Hotel4.jpg"),
+    require("./HotelImages/Hotel5.jpg"),
+    require("./HotelImages/Hotel6.jpg"),
+    require("./HotelImages/Hotel7.jpg"),
+    require("./HotelImages/Hotel8.jpg"),
+    require("./HotelImages/Hotel9.jpg"),
+    require("./HotelImages/Hotel10.jpg"),
+  ],
+  tickets: [
+    require("./TicketImages/1.jpg"),
+    require("./TicketImages/2.jpg"),
+    require("./TicketImages/3.jpg"),
+    require("./TicketImages/4.jpg"),
+    require("./TicketImages/5.jpg"),
+    require("./TicketImages/6.jpg"),
+    require("./TicketImages/7.jpg"),
+    require("./TicketImages/8.jpg"),
+    require("./TicketImages/9.jpg"),
+    require("./TicketImages/10.jpg"),
+    require("./TicketImages/11.jpg"),
+    require("./TicketImages/12.jpg"),
+    require("./TicketImages/13.jpg"),
+    require("./TicketImages/14.jpg"),
+    require("./TicketImages/15.jpg"),
+    require("./TicketImages/16.jpg"),
+  ]
+};

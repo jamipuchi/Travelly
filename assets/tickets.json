@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "Reverie Bibliotheca",
+    "price": "Free",
+    "type": "attraction"
+  },
+  {
+    "id": 2,
+    "name": "The Victory Assembly Hall",
+    "price": "$20",
+    "type": "theatre"
+  },
+  {
+    "id": 3,
+    "name": "The Obsidian Theatre",
+    "price": "$25",
+    "type": "theatre"
+  },
+  {
+    "id": 4,
+    "name": "International Gallery of Culture",
+    "price": "$10",
+    "type": "museum"
+  },
+  {
+    "id": 5,
+    "name": "Exhibition of Immersion",
+    "price": "$5",
+    "type": "museum"
+  },
+  {
+    "id": 6,
+    "name": "Royal Heritage Institute",
+    "price": "$20",
+    "type": "museum"
+  },
+  {
+    "id": 7,
+    "name": "Great Theater Treasury",
+    "price": "Free",
+    "type": "museum"
+  },
+  {
+    "id": 8,
+    "name": "The Treasure Trove",
+    "price": "Free",
+    "type": "museum"
+  },
+  {
+    "id": 9,
+    "name": "Bronze Arch Gardens",
+    "price": "Free",
+    "type": "park"
+  },
+  {
+    "id": 10,
+    "name": "Wildlife Park",
+    "price": "Free",
+    "type": "park"
+  },
+  {
+    "id": 11,
+    "name": "Paul Mark Park",
+    "price": "Free",
+    "type": "park"
+  },
+  {
+    "id": 12,
+    "name": "Trivial Smile",
+    "price": "Free",
+    "type": "attraction"
+  },
+  {
+    "id": 13,
+    "name": "Picayune Miracle",
+    "price": "Free",
+    "type": "attraction"
+  },
+  {
+    "id": 14,
+    "name": "Picayune Guide",
+    "price": "$5",
+    "type": "attraction"
+  },
+  {
+    "id": 15,
+    "name": "Animals of Luck",
+    "price": "Free",
+    "type": "attraction"
+  },
+  {
+    "id": 16,
+    "name": "Death of Insanity",
+    "price": "Free",
+    "type": "attraction"
+  }
+]
