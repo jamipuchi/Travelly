@@ -47,7 +47,15 @@ export default class Search extends Component {
       .map(function (item, i) {
         const selected = s.state.selectedHotel == i;
         return (
-          <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() =>
+              s.props.navigation.push("Hotel Details", {
+                hotelName: item.name,
+                hotelPrice: item.price,
+              })
+            }
+          >
             <ImageBackground
               source={images.hotels[item.id]}
               style={styles.hotelImage}
@@ -59,6 +67,7 @@ export default class Search extends Component {
                 <View style={{ flexDirection: "row" }}>
                   {[...Array(item.stars)].map((e, i) => (
                     <Icon
+                      key={i}
                       color="#F2C94C"
                       style={styles.star}
                       size={20}
@@ -99,7 +108,7 @@ export default class Search extends Component {
               </TouchableOpacity>
             </ImageBackground>
             <Text style={styles.hotelPrice}>${item.price} for 1 night</Text>
-          </View>
+          </TouchableOpacity>
         );
       });
   }

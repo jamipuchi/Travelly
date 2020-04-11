@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Search from "./Views/Search";
 import SearchResults from "./Views/SearchResults";
 import { render } from "react-dom";
+import HotelDetails from "./Views/HotelDetails";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,10 @@ function SearchNavigator() {
     <Stack.Navigator initialRouteName="Search" headerMode="none">
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Search Results" component={SearchResults} />
+      <Stack.Screen name="Hotel Details" component={HotelDetails} />
+      {/* <Stack.Screen name="Search Results" component={SearchResults} />
+      <Stack.Screen name="Search Results" component={SearchResults} /> */}
+      
     </Stack.Navigator>
   );
 }
