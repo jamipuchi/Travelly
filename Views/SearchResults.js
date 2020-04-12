@@ -337,7 +337,7 @@ export default class Search extends Component {
   render() {
     const { city, country, iataCode } = this.props.route.params;
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.icon}
@@ -356,306 +356,308 @@ export default class Search extends Component {
           </View>
           <View />
         </View>
-        <ScrollView style={styles.container}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.sectionTitle}>Flights</Text>
-            <TouchableOpacity
-              style={
-                this.state.flightPills.includes("economy")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.flightPills.includes("economy")) {
-                  this.setState(() => ({
-                    flightPills: [...this.state.flightPills, "economy"],
-                  }));
-                } else {
-                  var array = [...this.state.flightPills];
-                  var index = array.indexOf("economy");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ flightPills: array });
-                  }
+        <View style={{ flex: 1 }}>
+          <ScrollView style={styles.container}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.sectionTitle}>Flights</Text>
+              <TouchableOpacity
+                style={
+                  this.state.flightPills.includes("economy")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
                 }
-              }}
-            >
-              <Text>Economy</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.flightPills.includes("business")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.flightPills.includes("business")) {
-                  this.setState(() => ({
-                    flightPills: [...this.state.flightPills, "business"],
-                  }));
-                } else {
-                  var array = [...this.state.flightPills];
-                  var index = array.indexOf("business");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ flightPills: array });
+                onPress={() => {
+                  if (!this.state.flightPills.includes("economy")) {
+                    this.setState(() => ({
+                      flightPills: [...this.state.flightPills, "economy"],
+                    }));
+                  } else {
+                    var array = [...this.state.flightPills];
+                    var index = array.indexOf("economy");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ flightPills: array });
+                    }
                   }
+                }}
+              >
+                <Text>Economy</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.flightPills.includes("business")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
                 }
-              }}
-            >
-              <Text>Business</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.flightPills.includes("firstClass")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.flightPills.includes("firstClass")) {
-                  this.setState(() => ({
-                    flightPills: [...this.state.flightPills, "firstClass"],
-                  }));
-                } else {
-                  var array = [...this.state.flightPills];
-                  var index = array.indexOf("firstClass");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ flightPills: array });
+                onPress={() => {
+                  if (!this.state.flightPills.includes("business")) {
+                    this.setState(() => ({
+                      flightPills: [...this.state.flightPills, "business"],
+                    }));
+                  } else {
+                    var array = [...this.state.flightPills];
+                    var index = array.indexOf("business");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ flightPills: array });
+                    }
                   }
+                }}
+              >
+                <Text>Business</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.flightPills.includes("firstClass")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
                 }
-              }}
-            >
-              <Text>First class</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView style={styles.cardsContainer} horizontal={true}>
-            {this.renderFlights(this)}
-            <View style={{ width: 20 }} />
+                onPress={() => {
+                  if (!this.state.flightPills.includes("firstClass")) {
+                    this.setState(() => ({
+                      flightPills: [...this.state.flightPills, "firstClass"],
+                    }));
+                  } else {
+                    var array = [...this.state.flightPills];
+                    var index = array.indexOf("firstClass");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ flightPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>First class</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.cardsContainer} horizontal={true}>
+              {this.renderFlights(this)}
+              <View style={{ width: 20 }} />
+            </ScrollView>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.sectionTitle}>Hotels</Text>
+              <TouchableOpacity
+                style={
+                  this.state.hotelPills.includes("family")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.hotelPills.includes("family")) {
+                    this.setState(() => ({
+                      hotelPills: [...this.state.hotelPills, "family"],
+                    }));
+                  } else {
+                    var array = [...this.state.hotelPills];
+                    var index = array.indexOf("family");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ hotelPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Family</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.hotelPills.includes("couples")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.hotelPills.includes("couples")) {
+                    this.setState(() => ({
+                      hotelPills: [...this.state.hotelPills, "couples"],
+                    }));
+                  } else {
+                    var array = [...this.state.hotelPills];
+                    var index = array.indexOf("couples");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ hotelPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Couples</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.hotelPills.includes("relax")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.hotelPills.includes("relax")) {
+                    this.setState(() => ({
+                      hotelPills: [...this.state.hotelPills, "relax"],
+                    }));
+                  } else {
+                    var array = [...this.state.hotelPills];
+                    var index = array.indexOf("relax");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ hotelPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Relax</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.hotelPills.includes("value")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.hotelPills.includes("value")) {
+                    this.setState(() => ({
+                      hotelPills: [...this.state.hotelPills, "value"],
+                    }));
+                  } else {
+                    var array = [...this.state.hotelPills];
+                    var index = array.indexOf("value");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ hotelPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Value</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.hotelPills.includes("centric")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.hotelPills.includes("centric")) {
+                    this.setState(() => ({
+                      hotelPills: [...this.state.hotelPills, "centric"],
+                    }));
+                  } else {
+                    var array = [...this.state.hotelPills];
+                    var index = array.indexOf("centric");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ hotelPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Centric</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.cardsContainer} horizontal={true}>
+              {this.renderHotels(this)}
+              <View style={{ width: 20 }} />
+            </ScrollView>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.sectionTitle}>Tickets</Text>
+              <TouchableOpacity
+                style={
+                  this.state.ticketPills.includes("museum")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.ticketPills.includes("museum")) {
+                    this.setState(() => ({
+                      ticketPills: [...this.state.ticketPills, "museum"],
+                    }));
+                  } else {
+                    var array = [...this.state.ticketPills];
+                    var index = array.indexOf("museum");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ ticketPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Museum</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.ticketPills.includes("theatre")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.ticketPills.includes("theatre")) {
+                    this.setState(() => ({
+                      ticketPills: [...this.state.ticketPills, "theatre"],
+                    }));
+                  } else {
+                    var array = [...this.state.ticketPills];
+                    var index = array.indexOf("theatre");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ ticketPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Theatre</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.ticketPills.includes("attraction")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.ticketPills.includes("attraction")) {
+                    this.setState(() => ({
+                      ticketPills: [...this.state.ticketPills, "attraction"],
+                    }));
+                  } else {
+                    var array = [...this.state.ticketPills];
+                    var index = array.indexOf("attraction");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ ticketPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Attraction</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  this.state.ticketPills.includes("park")
+                    ? styles.pillSelected
+                    : styles.pillUnselected
+                }
+                onPress={() => {
+                  if (!this.state.ticketPills.includes("park")) {
+                    this.setState(() => ({
+                      ticketPills: [...this.state.ticketPills, "park"],
+                    }));
+                  } else {
+                    var array = [...this.state.ticketPills];
+                    var index = array.indexOf("park");
+                    if (index !== -1) {
+                      array.splice(index, 1);
+                      this.setState({ ticketPills: array });
+                    }
+                  }
+                }}
+              >
+                <Text>Park</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.cardsContainer} horizontal={true}>
+              {this.renderTickets(this)}
+              <View style={{ width: 20 }} />
+            </ScrollView>
+            <View height={50} />
           </ScrollView>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.sectionTitle}>Hotels</Text>
-            <TouchableOpacity
-              style={
-                this.state.hotelPills.includes("family")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.hotelPills.includes("family")) {
-                  this.setState(() => ({
-                    hotelPills: [...this.state.hotelPills, "family"],
-                  }));
-                } else {
-                  var array = [...this.state.hotelPills];
-                  var index = array.indexOf("family");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ hotelPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Family</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.hotelPills.includes("couples")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.hotelPills.includes("couples")) {
-                  this.setState(() => ({
-                    hotelPills: [...this.state.hotelPills, "couples"],
-                  }));
-                } else {
-                  var array = [...this.state.hotelPills];
-                  var index = array.indexOf("couples");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ hotelPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Couples</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.hotelPills.includes("relax")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.hotelPills.includes("relax")) {
-                  this.setState(() => ({
-                    hotelPills: [...this.state.hotelPills, "relax"],
-                  }));
-                } else {
-                  var array = [...this.state.hotelPills];
-                  var index = array.indexOf("relax");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ hotelPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Relax</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.hotelPills.includes("value")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.hotelPills.includes("value")) {
-                  this.setState(() => ({
-                    hotelPills: [...this.state.hotelPills, "value"],
-                  }));
-                } else {
-                  var array = [...this.state.hotelPills];
-                  var index = array.indexOf("value");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ hotelPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Value</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.hotelPills.includes("centric")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.hotelPills.includes("centric")) {
-                  this.setState(() => ({
-                    hotelPills: [...this.state.hotelPills, "centric"],
-                  }));
-                } else {
-                  var array = [...this.state.hotelPills];
-                  var index = array.indexOf("centric");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ hotelPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Centric</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView style={styles.cardsContainer} horizontal={true}>
-            {this.renderHotels(this)}
-            <View style={{ width: 20 }} />
-          </ScrollView>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.sectionTitle}>Tickets</Text>
-            <TouchableOpacity
-              style={
-                this.state.ticketPills.includes("museum")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.ticketPills.includes("museum")) {
-                  this.setState(() => ({
-                    ticketPills: [...this.state.ticketPills, "museum"],
-                  }));
-                } else {
-                  var array = [...this.state.ticketPills];
-                  var index = array.indexOf("museum");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ ticketPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Museum</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.ticketPills.includes("theatre")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.ticketPills.includes("theatre")) {
-                  this.setState(() => ({
-                    ticketPills: [...this.state.ticketPills, "theatre"],
-                  }));
-                } else {
-                  var array = [...this.state.ticketPills];
-                  var index = array.indexOf("theatre");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ ticketPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Theatre</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.ticketPills.includes("attraction")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.ticketPills.includes("attraction")) {
-                  this.setState(() => ({
-                    ticketPills: [...this.state.ticketPills, "attraction"],
-                  }));
-                } else {
-                  var array = [...this.state.ticketPills];
-                  var index = array.indexOf("attraction");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ ticketPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Attraction</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={
-                this.state.ticketPills.includes("park")
-                  ? styles.pillSelected
-                  : styles.pillUnselected
-              }
-              onPress={() => {
-                if (!this.state.ticketPills.includes("park")) {
-                  this.setState(() => ({
-                    ticketPills: [...this.state.ticketPills, "park"],
-                  }));
-                } else {
-                  var array = [...this.state.ticketPills];
-                  var index = array.indexOf("park");
-                  if (index !== -1) {
-                    array.splice(index, 1);
-                    this.setState({ ticketPills: array });
-                  }
-                }
-              }}
-            >
-              <Text>Park</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView style={styles.cardsContainer} horizontal={true}>
-            {this.renderTickets(this)}
-            <View style={{ width: 20 }} />
-          </ScrollView>
-          <View height={50} />
-        </ScrollView>
+        </View>
       </SafeAreaView>
     );
   }

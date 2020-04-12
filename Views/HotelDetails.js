@@ -12,13 +12,13 @@ import {
 import Icon from "react-native-vector-icons/Entypo";
 import IconMC from "react-native-vector-icons/MaterialCommunityIcons";
 import images from "../assets/images";
-import MapView from 'react-native-maps';
+import MapView from "react-native-maps";
 import { Marker, AnimatedRegion } from "react-native-maps";
 
 export default class HotelDetails extends Component {
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.icon}
@@ -125,21 +125,21 @@ export default class HotelDetails extends Component {
             {"  1 king sized bed"}
           </Text>
           <Text style={styles.titleText}>Location</Text>
-          {Platform.OS == "android" || Platform.OS == "ios" ? (
-            <MapView
-              style={{
-                height: 300,
-                marginLeft: 20,
-                marginRight: 20,
-                marginTop: 10,
-              }}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            >
+          <MapView
+            style={{
+              height: 300,
+              marginLeft: 20,
+              marginRight: 20,
+              marginTop: 10,
+            }}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            {Platform.OS == "android" || Platform.OS == "ios" ? (
               <Marker
                 coordinate={{
                   latitude: 37.79495,
@@ -148,10 +148,10 @@ export default class HotelDetails extends Component {
                 title={this.props.route.params.hotelName}
                 description={this.props.route.params.hotelName}
               />
-            </MapView>
-          ) : (
-            <Text>TODO</Text>
-          )}
+            ) : (
+              <View />
+            )}
+          </MapView>
           <Text style={styles.titleText}>Reviews</Text>
           <Text style={styles.descriptionText}>No reviews yet</Text>
           <View style={{ height: 60 }} />
