@@ -8,6 +8,9 @@ import Search from "./Views/Search";
 import SearchResults from "./Views/SearchResults";
 import { render } from "react-dom";
 import HotelDetails from "./Views/HotelDetails";
+import TicketDetails from "./Views/TicketDetails";
+import FlightDetails from "./Views/FlightDetails";
+import SelectedDetails from "./Views/SelectedDetails";
 
 const Stack = createStackNavigator();
 
@@ -41,9 +44,9 @@ function SearchNavigator() {
       <Stack.Screen name="Search" component={Search} />
       <Stack.Screen name="Search Results" component={SearchResults} />
       <Stack.Screen name="Hotel Details" component={HotelDetails} />
-      {/* <Stack.Screen name="Search Results" component={SearchResults} />
-      <Stack.Screen name="Search Results" component={SearchResults} /> */}
-      
+      <Stack.Screen name="Ticket Details" component={TicketDetails} />
+      <Stack.Screen name="Flight Details" component={FlightDetails} />
+      <Stack.Screen name="Selected Details" component={SelectedDetails} />
     </Stack.Navigator>
   );
 }

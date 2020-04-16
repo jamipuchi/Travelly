@@ -27,7 +27,6 @@ export default class Search extends Component {
       hotelPills: [],
       ticketPills: [],
     };
-    this.renderHotels = this.renderHotels.bind(this);
     for (let i = 0; i < flights.length * 4; i++) {
       this.state.flightHours.push(
         ("0" + Math.round(Math.random() * 24)).slice(-2) +
@@ -123,7 +122,18 @@ export default class Search extends Component {
       .map(function (item, i) {
         const selected = s.state.selectedFlight == i;
         return (
-          <View key={item.name} style={styles.card}>
+          <TouchableOpacity
+            onPress={() =>
+              s.props.navigation.push("Flight Details", {
+                flightName: item.name,
+                flightPrice: item.price,
+                flightId: item.id,
+                airport: s.props.route.params.iataCode,
+                class: item.class,
+              })
+            }
+            style={styles.card}
+          >
             <View style={styles.hotelInfo}>
               <View style={styles.airlineName}>
                 <Text>{item.name}</Text>
@@ -263,7 +273,7 @@ export default class Search extends Component {
             </View>
             <View style={styles.separator} />
             <Text style={styles.hotelPrice}>${item.price}</Text>
-          </View>
+          </TouchableOpacity>
         );
       });
   }
@@ -278,7 +288,16 @@ export default class Search extends Component {
       .map(function (item, i) {
         const selected = s.state.selectedTickets.includes(i);
         return (
-          <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() =>
+              s.props.navigation.push("Ticket Details", {
+                ticketName: item.name,
+                ticketPrice: item.price,
+                ticketId: item.id,
+              })
+            }
+          >
             <ImageBackground
               source={images.tickets[item.id - 1]}
               style={styles.hotelImage}
@@ -329,15 +348,33 @@ export default class Search extends Component {
               </TouchableOpacity>
             </ImageBackground>
             <Text style={styles.hotelPrice}>{item.price}</Text>
-          </View>
+          </TouchableOpacity>
         );
       });
   }
 
   render() {
     const { city, country, iataCode } = this.props.route.params;
+    console.log(this.state.selectedTickets);
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        {(this.state.selectedFlight >= 0 ||
+          this.state.selectedHotel >= 0 ||
+          this.state.selectedTickets.length > 0) && (
+          <TouchableOpacity
+            style={styles.buyButton}
+            onPress={() => {
+              this.props.navigation.push("Selected Details", {
+                flight: this.state.selectedFlight,
+                hotel: this.state.selectedHotel,
+                tickets: this.state.selectedTickets,
+              });
+            }}
+          >
+            <Icon name="shopping-cart" size={20} color="white" />
+          </TouchableOpacity>
+        )}
+
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.icon}
@@ -655,7 +692,7 @@ export default class Search extends Component {
               {this.renderTickets(this)}
               <View style={{ width: 20 }} />
             </ScrollView>
-            <View height={50} />
+            <View height={20} />
           </ScrollView>
         </View>
       </SafeAreaView>
@@ -904,5 +941,29 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
 
     elevation: 10,
+  },
+  buyButton: {
+    position: "absolute",
+    bottom: 30,
+    right: 30,
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    backgroundColor: "#3D90E3",
+    zIndex: 100,
+    shadowColor: "#000",
+    paddingRight: 5,
+    paddingLeft: 5,
+    paddingTop: 2,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6.27,
+
+    elevation: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
