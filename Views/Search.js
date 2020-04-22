@@ -41,48 +41,46 @@ export default class Search extends Component {
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
     return (
       <ImageBackground source={bg} style={styles.image}>
-        <View style={styles.container}>
-          <SafeAreaView>
-            <Autocomplete
-              autoCapitalize="none"
-              autoCorrect={false}
-              data={
-                cities.length === 1 && comp(query, cities[0].name) ? [] : cities
-              }
-              defaultValue={query}
-              onChangeText={(text) => this.setState({ query: text })}
-              placeholder="Where do you want to go?"
-              style={
-                cities.length < 1
-                  ? styles.autocompleteContainer
-                  : styles.autocompleteContainerExpanded
-              }
-              listContainerStyle={styles.list}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({
-                      query: item.city + " (" + item.country + ")",
-                    });
-                    this.props.navigation.push("Search Results", {
-                      city: item.city,
-                      country: item.country,
-                      iataCode: item.iata_code,
-                    });
-                  }}
-                >
-                  <Text style={styles.itemText}>
-                    <Text style={{ color: "gray", fontSize: 10 }}>
-                      {"   "}
-                      {item.iata_code}
-                    </Text>{" "}
-                    {item.city} ({item.country})
-                  </Text>
-                </TouchableOpacity>
-              )}
-            />
-          </SafeAreaView>
-        </View>
+        <SafeAreaView style={styles.container}>
+          <Autocomplete
+            autoCapitalize="none"
+            autoCorrect={false}
+            data={
+              cities.length === 1 && comp(query, cities[0].name) ? [] : cities
+            }
+            defaultValue={query}
+            onChangeText={(text) => this.setState({ query: text })}
+            placeholder="Where do you want to go?"
+            style={
+              cities.length < 1
+                ? styles.autocompleteContainer
+                : styles.autocompleteContainerExpanded
+            }
+            listContainerStyle={styles.list}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({
+                    query: item.city + " (" + item.country + ")",
+                  });
+                  this.props.navigation.push("Search Results", {
+                    city: item.city,
+                    country: item.country,
+                    iataCode: item.iata_code,
+                  });
+                }}
+              >
+                <Text style={styles.itemText}>
+                  <Text style={{ color: "gray", fontSize: 10 }}>
+                    {"   "}
+                    {item.iata_code}
+                  </Text>{" "}
+                  {item.city} ({item.country})
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </SafeAreaView>
       </ImageBackground>
     );
   }
@@ -108,7 +106,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
 
     elevation: 10,
-    zIndex: 500,
   },
   autocompleteContainerExpanded: {
     borderRadius: 10,
@@ -127,7 +124,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
 
     elevation: 10,
-    zIndex: 500,
   },
   list: {
     shadowColor: "#000",
@@ -145,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingTop: 5,
     paddingBottom: 5,
-    margin: 2,
+
   },
   infoText: {
     textAlign: "center",

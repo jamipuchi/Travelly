@@ -8,6 +8,7 @@ import {
   ScrollView,
   ImageBackground,
   Platform,
+  StatusBar,
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import IconMC from "react-native-vector-icons/MaterialCommunityIcons";
@@ -18,7 +19,7 @@ import { Marker, AnimatedRegion } from "react-native-maps";
 export default class TicketDetails extends Component {
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.icon}
@@ -60,7 +61,7 @@ export default class TicketDetails extends Component {
             nec.
           </Text>
           <Text style={styles.titleText}>Info</Text>
-          <View style={{flexDirection:"row"}}>
+          <View style={{ flexDirection: "row" }}>
             <View>
               <Text style={{ marginLeft: 20, marginTop: 10 }}>
                 <IconMC name="clock" size={20} color="black" />
@@ -376,5 +377,16 @@ const styles = StyleSheet.create({
     marginRight: 20,
     textAlign: "justify",
     marginTop: 10,
+  },
+  safeAreaView: {
+    flex: 1,
+    ...Platform.select({
+      ios: {
+        marginTop: 5,
+      },
+      android: {
+        marginTop: StatusBar.currentHeight + 5,
+      },
+    }),
   },
 });

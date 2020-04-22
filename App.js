@@ -11,30 +11,47 @@ import HotelDetails from "./Views/HotelDetails";
 import TicketDetails from "./Views/TicketDetails";
 import FlightDetails from "./Views/FlightDetails";
 import SelectedDetails from "./Views/SelectedDetails";
+import Explore from "./Views/Explore";
+import Trips from "./Views/Trips";
+import Settings from "./Views/Settings";
+import Select from "./Views/Select";
+import BlablaText from "./Views/BlablaText";
 
 const Stack = createStackNavigator();
 
-function Explore() {
+function ExploreNavigator() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Explore!</Text>
-    </View>
+    <Stack.Navigator initialRouteName="Explore" headerMode="none">
+      <Stack.Screen name="Explore" component={Explore} />
+      <Stack.Screen name="Search Results" component={SearchResults} />
+      <Stack.Screen name="Hotel Details" component={HotelDetails} />
+      <Stack.Screen name="Ticket Details" component={TicketDetails} />
+      <Stack.Screen name="Flight Details" component={FlightDetails} />
+      <Stack.Screen name="Selected Details" component={SelectedDetails} />
+    </Stack.Navigator>
   );
 }
 
-function Trips() {
+function TripsNavigator() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Trips!</Text>
-    </View>
+    <Stack.Navigator initialRouteName="Trips" headerMode="none">
+      <Stack.Screen name="Trips" component={Trips} />
+      <Stack.Screen name="Search Results" component={SearchResults} />
+      <Stack.Screen name="Hotel Details" component={HotelDetails} />
+      <Stack.Screen name="Ticket Details" component={TicketDetails} />
+      <Stack.Screen name="Flight Details" component={FlightDetails} />
+      <Stack.Screen name="Selected Details" component={SelectedDetails} />
+    </Stack.Navigator>
   );
 }
 
-function Settings() {
+function SettingsNavigator() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
+    <Stack.Navigator initialRouteName="Settings" headerMode="none">
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Select" component={Select} />
+      <Stack.Screen name="BlablaText" component={BlablaText} />
+    </Stack.Navigator>
   );
 }
 
@@ -73,7 +90,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Explore"
-        component={Explore}
+        component={ExploreNavigator}
         options={{
           tabBarLabel: "Explore",
           tabBarIcon: ({ color, size }) => (
@@ -83,7 +100,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Trips"
-        component={Trips}
+        component={TripsNavigator}
         options={{
           tabBarLabel: "Trips",
           tabBarIcon: ({ color, size }) => (
@@ -97,7 +114,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={SettingsNavigator}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ color, size }) => (

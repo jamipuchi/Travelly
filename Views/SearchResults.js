@@ -7,6 +7,7 @@ import {
   ImageBackground,
   CheckBox,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import hotels from "../assets/hotels.json";
@@ -196,24 +197,7 @@ export default class Search extends Component {
                   size={14}
                   name="chevron-thin-right"
                 />
-                <View
-                  style={{
-                    borderRadius: 10,
-                    backgroundColor: "white",
-                    shadowColor: "#000",
-                    paddingRight: 5,
-                    paddingLeft: 5,
-                    paddingTop: 2,
-                    shadowOffset: {
-                      width: 0,
-                      height: 5,
-                    },
-                    shadowOpacity: 0.34,
-                    shadowRadius: 6.27,
-
-                    elevation: 10,
-                  }}
-                >
+                <View style={styles.pill}>
                   <Text>{item.type}</Text>
                 </View>
               </View>
@@ -286,7 +270,7 @@ export default class Search extends Component {
           s.state.ticketPills.length == 0
       )
       .map(function (item, i) {
-        const selected = s.state.selectedTickets.includes(i);
+        const selected = s.state.selectedTickets.includes(item.id);
         return (
           <TouchableOpacity
             style={styles.card}
@@ -311,11 +295,11 @@ export default class Search extends Component {
                 onPress={() => {
                   if (!selected) {
                     s.setState(() => ({
-                      selectedTickets: [...s.state.selectedTickets, i],
+                      selectedTickets: [...s.state.selectedTickets, item.id],
                     }));
                   } else {
                     var array = [...s.state.selectedTickets];
-                    var index = array.indexOf(i);
+                    var index = array.indexOf(item);
                     if (index !== -1) {
                       array.splice(index, 1);
                       s.setState({ selectedTickets: array });
@@ -357,7 +341,7 @@ export default class Search extends Component {
     const { city, country, iataCode } = this.props.route.params;
     console.log(this.state.selectedTickets);
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.safeAreaView}>
         {(this.state.selectedFlight >= 0 ||
           this.state.selectedHotel >= 0 ||
           this.state.selectedTickets.length > 0) && (
@@ -729,8 +713,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cardsContainer: {
-    paddingTop: 20,
-    paddingBottom: 20,
     paddingRight: 20,
   },
   sectionTitle: {
@@ -739,6 +721,8 @@ const styles = StyleSheet.create({
   },
   card: {
     marginLeft: 20,
+    marginTop: 20,
+    marginBottom: 20,
     height: 300,
     width: 250,
     backgroundColor: "white",
@@ -898,7 +882,6 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     paddingRight: 5,
     paddingLeft: 5,
-    paddingTop: 2,
     shadowOffset: {
       width: 0,
       height: 5,
@@ -915,14 +898,14 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     paddingRight: 5,
     paddingLeft: 5,
-    paddingTop: 2,
+    marginTop: 4,
+    marginBottom: 4,
     shadowOffset: {
       width: 0,
       height: 5,
     },
-    shadowOpacity: 0.34,
+    shadowOpacity: 0.1,
     shadowRadius: 6.27,
-
     elevation: 10,
   },
   pillSelected: {
@@ -932,14 +915,14 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     paddingRight: 5,
     paddingLeft: 5,
-    paddingTop: 2,
+    marginTop: 4,
+    marginBottom: 4,
     shadowOffset: {
       width: 0,
       height: 5,
     },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
-
     elevation: 10,
   },
   buyButton: {
@@ -965,5 +948,16 @@ const styles = StyleSheet.create({
     elevation: 10,
     alignItems: "center",
     justifyContent: "center",
+  },
+  safeAreaView: {
+    flex: 1,
+    ...Platform.select({
+      ios: {
+        marginTop: 5,
+      },
+      android: {
+        marginTop: StatusBar.currentHeight + 5,
+      },
+    }),
   },
 });

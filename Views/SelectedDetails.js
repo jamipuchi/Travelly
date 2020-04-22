@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Platform,
   Alert,
+  StatusBar
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import IconMC from "react-native-vector-icons/MaterialCommunityIcons";
@@ -23,7 +24,7 @@ export default class SelectedDetails extends Component {
   render() {
     console.log(this.props.route.params.flight);
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.safeAreaView}>
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.icon}
@@ -494,5 +495,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     textAlign: "center",
+  },
+  safeAreaView: {
+    flex: 1,
+    ...Platform.select({
+      ios: {
+        marginTop: 5,
+      },
+      android: {
+        marginTop: StatusBar.currentHeight + 5,
+      },
+    }),
   },
 });
