@@ -15,25 +15,100 @@ import flights from "../assets/flights.json";
 import tickets from "../assets/tickets.json";
 import Icon from "react-native-vector-icons/Entypo";
 import images from "../assets/images";
+import HotelCardSelectable from "./Cards/HotelCardSelectable";
+import FlightCardSelectable from "./Cards/FlightCardSelectable";
+import Checkbox from "./Cards/Checkbox";
+import TicketCardSelectable from "./TicketCardSelectable";
+import FilterPill from "./Cards/FilterPill";
 
-export default class Search extends Component {
+export default class SearchResults extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedHotel: -1,
       selectedFlight: -1,
       selectedTickets: [],
-      flightHours: [],
       flightPills: [],
       hotelPills: [],
       ticketPills: [],
     };
-    for (let i = 0; i < flights.length * 4; i++) {
-      this.state.flightHours.push(
-        ("0" + Math.round(Math.random() * 24)).slice(-2) +
-          ":" +
-          ("0" + Math.round(Math.random() * 60)).slice(-2)
-      );
+    this.selectHotel = this.selectHotel.bind(this);
+    this.selectFlight = this.selectFlight.bind(this);
+    this.selectTicket = this.selectTicket.bind(this);
+    this.selectFlightPill = this.selectFlightPill.bind(this);
+    this.selectHotelPill = this.selectHotelPill.bind(this);
+    this.selectTicketPill = this.selectTicketPill.bind(this);
+  }
+
+  selectHotel(selected, i) {
+    this.setState({
+      selectedHotel: selected ? -1 : i,
+    });
+  }
+
+  selectFlight(selected, i) {
+    this.setState({
+      selectedFlight: selected ? -1 : i,
+    });
+  }
+
+  selectTicket(selected, i) {
+    if (!selected) {
+      this.setState(() => ({
+        selectedTickets: [...this.state.selectedTickets, i + 1],
+      }));
+    } else {
+      var array = [...this.state.selectedTickets];
+      var index = array.indexOf(i + 1);
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({ selectedTickets: array });
+      }
+    }
+  }
+
+  selectFlightPill(pill) {
+    if (!this.state.flightPills.includes(pill)) {
+      this.setState(() => ({
+        flightPills: [...this.state.flightPills, pill],
+      }));
+    } else {
+      var array = [...this.state.flightPills];
+      var index = array.indexOf(pill);
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({ flightPills: array });
+      }
+    }
+  }
+
+  selectHotelPill(pill) {
+    if (!this.state.hotelPills.includes(pill)) {
+      this.setState(() => ({
+        hotelPills: [...this.state.hotelPills, pill],
+      }));
+    } else {
+      var array = [...this.state.hotelPills];
+      var index = array.indexOf(pill);
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({ hotelPills: array });
+      }
+    }
+  }
+
+  selectTicketPill(pill) {
+    if (!this.state.ticketPills.includes(pill)) {
+      this.setState(() => ({
+        ticketPills: [...this.state.ticketPills, pill],
+      }));
+    } else {
+      var array = [...this.state.ticketPills];
+      var index = array.indexOf(pill);
+      if (index !== -1) {
+        array.splice(index, 1);
+        this.setState({ ticketPills: array });
+      }
     }
   }
 
@@ -47,68 +122,16 @@ export default class Search extends Component {
       .map(function (item, i) {
         const selected = s.state.selectedHotel == i;
         return (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() =>
-              s.props.navigation.push("Hotel Details", {
-                hotelName: item.name,
-                hotelPrice: item.price,
-              })
-            }
-          >
-            <ImageBackground
-              source={images.hotels[item.id]}
-              style={styles.hotelImage}
-            >
-              <View style={styles.hotelInfo}>
-                <View style={styles.hotelName}>
-                  <Text>{item.name}</Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  {[...Array(item.stars)].map((e, i) => (
-                    <Icon
-                      key={i}
-                      color="#F2C94C"
-                      style={styles.star}
-                      size={20}
-                      name="star"
-                    />
-                  ))}
-                </View>
-              </View>
-              <TouchableOpacity
-                onPress={() => {
-                  s.setState({
-                    selectedHotel: selected ? -1 : i,
-                  });
-                }}
-                horizontal={true}
-                style={
-                  !selected ? styles.selectButton : styles.selectButtonSelected
-                }
-              >
-                <View
-                  style={
-                    selected
-                      ? styles.checkboxUnselected
-                      : styles.checkboxSelected
-                  }
-                >
-                  {selected ? (
-                    <Icon name="check" size={12} color="#62DD84" />
-                  ) : (
-                    <View />
-                  )}
-                </View>
-                <Text
-                  style={!selected ? styles.selectText : styles.selectedText}
-                >
-                  {selected ? "Selected" : "Select"}
-                </Text>
-              </TouchableOpacity>
-            </ImageBackground>
-            <Text style={styles.hotelPrice}>${item.price} for 1 night</Text>
-          </TouchableOpacity>
+          <HotelCardSelectable
+            name={item.name}
+            price={item.price}
+            stars={item.stars}
+            navigation={s.props.navigation}
+            image={images.hotels[item.id]}
+            onSelected={s.selectHotel}
+            selected={selected}
+            i={i}
+          />
         );
       });
   }
@@ -123,141 +146,17 @@ export default class Search extends Component {
       .map(function (item, i) {
         const selected = s.state.selectedFlight == i;
         return (
-          <TouchableOpacity
-            onPress={() =>
-              s.props.navigation.push("Flight Details", {
-                flightName: item.name,
-                flightPrice: item.price,
-                flightId: item.id,
-                airport: s.props.route.params.iataCode,
-                class: item.class,
-              })
-            }
-            style={styles.card}
-          >
-            <View style={styles.hotelInfo}>
-              <View style={styles.airlineName}>
-                <Text>{item.name}</Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                s.setState({
-                  selectedFlight: selected ? -1 : i,
-                });
-              }}
-              horizontal={true}
-              style={
-                !selected ? styles.selectButton : styles.selectButtonSelected
-              }
-            >
-              <View
-                style={
-                  selected ? styles.checkboxUnselected : styles.checkboxSelected
-                }
-              >
-                {selected ? (
-                  <Icon name="check" size={12} color="#62DD84" />
-                ) : (
-                  <View />
-                )}
-              </View>
-              <Text style={!selected ? styles.selectText : styles.selectedText}>
-                {selected ? "Selected" : "Select"}
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.time1}>
-              <Text style={{ fontSize: 17 }}>{s.state.flightHours[i * 4]}</Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: "60%",
-                  height: 20,
-                  justifyContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    width: "90%",
-                    position: "absolute",
-                    top: 10,
-                    left: "5%",
-                    borderBottomColor: "black",
-                    borderBottomWidth: 1,
-                    height: 1,
-                  }}
-                />
-                <Icon
-                  style={{
-                    color: "black",
-                    position: "absolute",
-                    top: 3,
-                    right: 2,
-                  }}
-                  size={14}
-                  name="chevron-thin-right"
-                />
-                <View style={styles.pill}>
-                  <Text>{item.type}</Text>
-                </View>
-              </View>
-              <Text style={{ fontSize: 17 }}>
-                {s.state.flightHours[i * 4 + 1]}
-              </Text>
-            </View>
-            <View
-              style={{
-                position: "absolute",
-                top: 160,
-                left: 20,
-                right: 25,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text style={{ fontSize: 17 }}>
-                {s.state.flightHours[i * 4 + 2]}
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: "60%",
-                  height: 20,
-                  justifyContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    width: "90%",
-                    position: "absolute",
-                    top: 10,
-                    left: "5%",
-                    borderBottomColor: "black",
-                    borderBottomWidth: 1,
-                    height: 1,
-                  }}
-                />
-                <Icon
-                  style={{
-                    color: "black",
-                    position: "absolute",
-                    top: 3,
-                    right: 2,
-                  }}
-                  size={14}
-                  name="chevron-thin-right"
-                />
-                <View style={styles.pill}>
-                  <Text>{item.type}</Text>
-                </View>
-              </View>
-              <Text style={{ fontSize: 17 }}>
-                {s.state.flightHours[i * 4 + 3]}
-              </Text>
-            </View>
-            <View style={styles.separator} />
-            <Text style={styles.hotelPrice}>${item.price}</Text>
-          </TouchableOpacity>
+          <FlightCardSelectable
+            name={item.name}
+            price={item.price}
+            id={item.id}
+            airport={s.props.route.params.iataCode}
+            class={item.class}
+            selected={selected}
+            i={i}
+            navigation={s.props.navigation}
+            onSelected={s.selectFlight}
+          />
         );
       });
   }
@@ -272,74 +171,23 @@ export default class Search extends Component {
       .map(function (item, i) {
         const selected = s.state.selectedTickets.includes(item.id);
         return (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() =>
-              s.props.navigation.push("Ticket Details", {
-                ticketName: item.name,
-                ticketPrice: item.price,
-                ticketId: item.id,
-              })
-            }
-          >
-            <ImageBackground
-              source={images.tickets[item.id - 1]}
-              style={styles.hotelImage}
-            >
-              <View style={styles.hotelInfo}>
-                <View style={styles.hotelName}>
-                  <Text>{item.name}</Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                onPress={() => {
-                  if (!selected) {
-                    s.setState(() => ({
-                      selectedTickets: [...s.state.selectedTickets, item.id],
-                    }));
-                  } else {
-                    var array = [...s.state.selectedTickets];
-                    var index = array.indexOf(item);
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      s.setState({ selectedTickets: array });
-                    }
-                  }
-                }}
-                horizontal={true}
-                style={
-                  !selected ? styles.selectButton : styles.selectButtonSelected
-                }
-              >
-                <View
-                  style={
-                    selected
-                      ? styles.checkboxUnselected
-                      : styles.checkboxSelected
-                  }
-                >
-                  {selected ? (
-                    <Icon name="check" size={12} color="#62DD84" />
-                  ) : (
-                    <View />
-                  )}
-                </View>
-                <Text
-                  style={!selected ? styles.selectText : styles.selectedText}
-                >
-                  {selected ? "Selected" : "Select"}
-                </Text>
-              </TouchableOpacity>
-            </ImageBackground>
-            <Text style={styles.hotelPrice}>{item.price}</Text>
-          </TouchableOpacity>
+          <TicketCardSelectable
+            name={item.name}
+            image={images.tickets[item.id - 1]}
+            price={item.price}
+            onSelected={s.selectTicket}
+            id={item.id}
+            selected={selected}
+            i={i}
+            navigation={s.props.navigation}
+            onSelected={s.selectTicket}
+          />
         );
       });
   }
 
   render() {
     const { city, country, iataCode } = this.props.route.params;
-    console.log(this.state.selectedTickets);
     return (
       <SafeAreaView style={styles.safeAreaView}>
         {(this.state.selectedFlight >= 0 ||
@@ -351,7 +199,8 @@ export default class Search extends Component {
               this.props.navigation.push("Selected Details", {
                 flight: this.state.selectedFlight,
                 hotel: this.state.selectedHotel,
-                tickets: this.state.selectedTickets,
+                tickets: this.state.selectedTickets.map((item, i) => item - 1),
+                purchaseOn: true,
               });
             }}
           >
@@ -381,75 +230,20 @@ export default class Search extends Component {
           <ScrollView style={styles.container}>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.sectionTitle}>Flights</Text>
-              <TouchableOpacity
-                style={
-                  this.state.flightPills.includes("economy")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.flightPills.includes("economy")) {
-                    this.setState(() => ({
-                      flightPills: [...this.state.flightPills, "economy"],
-                    }));
-                  } else {
-                    var array = [...this.state.flightPills];
-                    var index = array.indexOf("economy");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ flightPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Economy</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.flightPills.includes("business")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.flightPills.includes("business")) {
-                    this.setState(() => ({
-                      flightPills: [...this.state.flightPills, "business"],
-                    }));
-                  } else {
-                    var array = [...this.state.flightPills];
-                    var index = array.indexOf("business");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ flightPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Business</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.flightPills.includes("firstClass")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.flightPills.includes("firstClass")) {
-                    this.setState(() => ({
-                      flightPills: [...this.state.flightPills, "firstClass"],
-                    }));
-                  } else {
-                    var array = [...this.state.flightPills];
-                    var index = array.indexOf("firstClass");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ flightPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>First class</Text>
-              </TouchableOpacity>
+              {[
+                { name: "Economy", label: "economy" },
+                { name: "Business", label: "business" },
+                { name: "First Class", label: "firstClass" },
+              ].map((item, i) => {
+                return (
+                  <FilterPill
+                    name={item.name}
+                    label={item.label}
+                    selected={this.state.flightPills.includes(item.label)}
+                    onSelected={this.selectFlightPill}
+                  />
+                );
+              })}
             </View>
             <ScrollView style={styles.cardsContainer} horizontal={true}>
               {this.renderFlights(this)}
@@ -457,121 +251,22 @@ export default class Search extends Component {
             </ScrollView>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.sectionTitle}>Hotels</Text>
-              <TouchableOpacity
-                style={
-                  this.state.hotelPills.includes("family")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.hotelPills.includes("family")) {
-                    this.setState(() => ({
-                      hotelPills: [...this.state.hotelPills, "family"],
-                    }));
-                  } else {
-                    var array = [...this.state.hotelPills];
-                    var index = array.indexOf("family");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ hotelPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Family</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.hotelPills.includes("couples")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.hotelPills.includes("couples")) {
-                    this.setState(() => ({
-                      hotelPills: [...this.state.hotelPills, "couples"],
-                    }));
-                  } else {
-                    var array = [...this.state.hotelPills];
-                    var index = array.indexOf("couples");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ hotelPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Couples</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.hotelPills.includes("relax")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.hotelPills.includes("relax")) {
-                    this.setState(() => ({
-                      hotelPills: [...this.state.hotelPills, "relax"],
-                    }));
-                  } else {
-                    var array = [...this.state.hotelPills];
-                    var index = array.indexOf("relax");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ hotelPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Relax</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.hotelPills.includes("value")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.hotelPills.includes("value")) {
-                    this.setState(() => ({
-                      hotelPills: [...this.state.hotelPills, "value"],
-                    }));
-                  } else {
-                    var array = [...this.state.hotelPills];
-                    var index = array.indexOf("value");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ hotelPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Value</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.hotelPills.includes("centric")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.hotelPills.includes("centric")) {
-                    this.setState(() => ({
-                      hotelPills: [...this.state.hotelPills, "centric"],
-                    }));
-                  } else {
-                    var array = [...this.state.hotelPills];
-                    var index = array.indexOf("centric");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ hotelPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Centric</Text>
-              </TouchableOpacity>
+              {[
+                { name: "Family", label: "family" },
+                { name: "Couples", label: "couples" },
+                { name: "Relax", label: "relax" },
+                { name: "Value", label: "value" },
+                { name: "Centric", label: "centric" },
+              ].map((item, i) => {
+                return (
+                  <FilterPill
+                    name={item.name}
+                    label={item.label}
+                    selected={this.state.hotelPills.includes(item.label)}
+                    onSelected={this.selectHotelPill}
+                  />
+                );
+              })}
             </View>
             <ScrollView style={styles.cardsContainer} horizontal={true}>
               {this.renderHotels(this)}
@@ -579,98 +274,21 @@ export default class Search extends Component {
             </ScrollView>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.sectionTitle}>Tickets</Text>
-              <TouchableOpacity
-                style={
-                  this.state.ticketPills.includes("museum")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.ticketPills.includes("museum")) {
-                    this.setState(() => ({
-                      ticketPills: [...this.state.ticketPills, "museum"],
-                    }));
-                  } else {
-                    var array = [...this.state.ticketPills];
-                    var index = array.indexOf("museum");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ ticketPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Museum</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.ticketPills.includes("theatre")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.ticketPills.includes("theatre")) {
-                    this.setState(() => ({
-                      ticketPills: [...this.state.ticketPills, "theatre"],
-                    }));
-                  } else {
-                    var array = [...this.state.ticketPills];
-                    var index = array.indexOf("theatre");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ ticketPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Theatre</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.ticketPills.includes("attraction")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.ticketPills.includes("attraction")) {
-                    this.setState(() => ({
-                      ticketPills: [...this.state.ticketPills, "attraction"],
-                    }));
-                  } else {
-                    var array = [...this.state.ticketPills];
-                    var index = array.indexOf("attraction");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ ticketPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Attraction</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  this.state.ticketPills.includes("park")
-                    ? styles.pillSelected
-                    : styles.pillUnselected
-                }
-                onPress={() => {
-                  if (!this.state.ticketPills.includes("park")) {
-                    this.setState(() => ({
-                      ticketPills: [...this.state.ticketPills, "park"],
-                    }));
-                  } else {
-                    var array = [...this.state.ticketPills];
-                    var index = array.indexOf("park");
-                    if (index !== -1) {
-                      array.splice(index, 1);
-                      this.setState({ ticketPills: array });
-                    }
-                  }
-                }}
-              >
-                <Text>Park</Text>
-              </TouchableOpacity>
+              {[
+                { name: "Museum", label: "museum" },
+                { name: "Theatre", label: "theatre" },
+                { name: "Attraction", label: "attraction" },
+                { name: "Park", label: "park" },
+              ].map((item, i) => {
+                return (
+                  <FilterPill
+                    name={item.name}
+                    label={item.label}
+                    selected={this.state.ticketPills.includes(item.label)}
+                    onSelected={this.selectTicketPill}
+                  />
+                );
+              })}
             </View>
             <ScrollView style={styles.cardsContainer} horizontal={true}>
               {this.renderTickets(this)}
@@ -718,212 +336,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginLeft: 20,
     fontSize: 20,
-  },
-  card: {
-    marginLeft: 20,
-    marginTop: 20,
-    marginBottom: 20,
-    height: 300,
-    width: 250,
-    backgroundColor: "white",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-  hotelImage: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    overflow: "hidden",
-    height: 250,
-    width: 250,
-  },
-  selectButton: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    padding: 5,
-    margin: 10,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderColor: "#62DD84",
-    borderWidth: 1,
-    flexDirection: "row",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-  selectButtonSelected: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    padding: 5,
-    margin: 10,
-    borderRadius: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderColor: "#62DD84",
-    borderWidth: 1,
-    flexDirection: "row",
-    backgroundColor: "#62DD84",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-  hotelInfo: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    margin: 10,
-  },
-
-  hotelName: {
-    borderRadius: 5,
-    padding: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(256, 256, 256, 0.8)",
-    maxWidth: 130,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-  airlineName: {
-    padding: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    maxWidth: 130,
-  },
-  selectText: { color: "#62DD84" },
-  selectedText: { color: "white" },
-  checkboxUnselected: {
-    height: 15,
-    width: 15,
-    borderColor: "white",
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderRadius: 3,
-    marginRight: 5,
-  },
-  checkboxSelected: {
-    height: 15,
-    width: 15,
-    borderColor: "#62DD84",
-    color: "white",
-    borderWidth: 1,
-    borderRadius: 3,
-    marginRight: 5,
-  },
-  star: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-  hotelPrice: {
-    position: "absolute",
-    bottom: 15,
-    left: 0,
-    fontSize: 20,
-    textAlign: "center",
-    width: "100%",
-  },
-  separator: {
-    width: "90%",
-    position: "absolute",
-    bottom: 50,
-    left: "5%",
-    borderBottomColor: "#dddddd",
-    borderBottomWidth: 1,
-  },
-  time1: {
-    position: "absolute",
-    top: 100,
-    left: 20,
-    right: 25,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  pill: {
-    borderRadius: 10,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    paddingRight: 5,
-    paddingLeft: 5,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-  pillUnselected: {
-    marginLeft: 10,
-    borderRadius: 10,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    paddingRight: 5,
-    paddingLeft: 5,
-    marginTop: 4,
-    marginBottom: 4,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 6.27,
-    elevation: 10,
-  },
-  pillSelected: {
-    marginLeft: 10,
-    borderRadius: 10,
-    backgroundColor: "#3D90E3",
-    shadowColor: "#000",
-    paddingRight: 5,
-    paddingLeft: 5,
-    marginTop: 4,
-    marginBottom: 4,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    elevation: 10,
   },
   buyButton: {
     position: "absolute",

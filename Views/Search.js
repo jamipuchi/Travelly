@@ -143,10 +143,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
 
   },
-  infoText: {
-    textAlign: "center",
-    fontSize: 16,
-  },
   image: {
     flex: 1,
     resizeMode: "cover",

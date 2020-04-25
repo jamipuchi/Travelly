@@ -7,7 +7,11 @@ import {
   ScrollView,
   StatusBar,
   Dimensions,
+  ImageBackground,
+  TouchableOpacity,
 } from "react-native";
+import images from "../assets/images";
+import TripCard from "./Cards/TripCard";
 
 const trips = {
   upcoming: ["Rome", "Paris", "Venice", "Barcelona"],
@@ -15,14 +19,15 @@ const trips = {
 };
 
 export default class Trips extends Component {
-  renderExplore(list) {
+  renderExplore(list, photos, opacity) {
     return list.map((item, i) => {
       return (
-        <View style={styles.card}>
-          <View style={styles.cardName}>
-            <Text>{item}</Text>
-          </View>
-        </View>
+        <TripCard
+          photo={photos[i]}
+          cityName={item}
+          opacity={opacity}
+          navigation={this.props.navigation}
+        />
       );
     });
   }
@@ -36,11 +41,11 @@ export default class Trips extends Component {
         <ScrollView>
           <Text style={styles.sectionTitle}>Upcoming</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-            {this.renderExplore(trips.upcoming)}
+            {this.renderExplore(trips.upcoming, images.trips.upcoming, false)}
           </View>
           <Text style={styles.sectionTitle}>Past</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap"}}>
-            {this.renderExplore(trips.past)}
+          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            {this.renderExplore(trips.past, images.trips.past, true)}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -55,9 +60,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 30,
-  },
-  cardsContainer: {
-    paddingRight: 20,
   },
   card: {
     marginTop: 20,
@@ -77,14 +79,6 @@ const styles = StyleSheet.create({
 
     elevation: 10,
     backgroundColor: "black",
-  },
-  cardName: {
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    padding: 10,
-    borderRadius: 10,
   },
   sectionTitle: {
     fontSize: 20,

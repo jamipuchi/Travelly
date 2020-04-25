@@ -6,23 +6,44 @@ import {
   Text,
   ScrollView,
   StatusBar,
+  ImageBackground,
 } from "react-native";
+import images from "../assets/images";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import ExploreCard from "./Cards/ExploreCard";
 
 const places = {
-  family: ["Rome", "Paris", "Venice", "Barcelona"],
-  sightseeing: ["Salzburg", "Bangkok", "Singapore", "Dubai", "New York"],
-  couples: ["Bora Bora", "Bali", "Orkney", "Cape Town"],
+  family: [
+    { cityName: "Rome", countryName: "Italy" },
+    { cityName: "Paris", countryName: "France" },
+    { cityName: "Venice", countryName: "Italy" },
+    { cityName: "Barcelona", countryName: "Spain" },
+  ],
+  sightseeing: [
+    { cityName: "Salzburg", countryName: "Austria" },
+    { cityName: "Bangkok", countryName: "Thailand" },
+    { cityName: "Singapore", countryName: "Singapore" },
+    { cityName: "Dubai", countryName: "United Arab Emirates" },
+    { cityName: "New York", countryName: "United States" },
+  ],
+  couples: [
+    { cityName: "Bora Bora", countryName: "French Polynesia" },
+    { cityName: "Bali", countryName: "Indonesia" },
+    { cityName: "Orkney", countryName: "Scotland" },
+    { cityName: "Cape Town", countryName: "South Africa" },
+  ],
 };
 
 export default class Explore extends Component {
-  renderExplore(list) {
+  renderExplore(list, photos) {
     return list.map((item, i) => {
       return (
-        <View style={styles.card}>
-          <View style={styles.cardName}>
-            <Text>{item}</Text>
-          </View>
-        </View>
+        <ExploreCard
+          cityName={item.cityName}
+          countryName={item.countryName}
+          navigation={this.props.navigation}
+          photo={photos[i]}
+        />
       );
     });
   }
@@ -36,17 +57,17 @@ export default class Explore extends Component {
         <ScrollView>
           <Text style={styles.sectionTitle}>Family</Text>
           <ScrollView style={styles.cardsContainer} horizontal={true}>
-            {this.renderExplore(places.family)}
+            {this.renderExplore(places.family, images.explore.family)}
             <View style={{ width: 20 }} />
           </ScrollView>
           <Text style={styles.sectionTitle}>Sightseeing</Text>
           <ScrollView style={styles.cardsContainer} horizontal={true}>
-            {this.renderExplore(places.sightseeing)}
+            {this.renderExplore(places.sightseeing, images.explore.sightseeing)}
             <View style={{ width: 20 }} />
           </ScrollView>
           <Text style={styles.sectionTitle}>Romantic</Text>
           <ScrollView style={styles.cardsContainer} horizontal={true}>
-            {this.renderExplore(places.couples)}
+            {this.renderExplore(places.couples, images.explore.romantic)}
             <View style={{ width: 20 }} />
           </ScrollView>
         </ScrollView>
@@ -65,33 +86,6 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     paddingRight: 20,
-  },
-  card: {
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: 20,
-    height: 300,
-    width: 250,
-    backgroundColor: "white",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-    backgroundColor: "black",
-  },
-  cardName: {
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    padding: 10,
-    borderRadius: 10,
   },
   sectionTitle: {
     fontSize: 20,

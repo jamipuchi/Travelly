@@ -28,5 +28,41 @@ export default {
     require("./TicketImages/14.jpg"),
     require("./TicketImages/15.jpg"),
     require("./TicketImages/16.jpg"),
-  ]
+  ],
+  explore: {
+    family: [
+      require("./Explore/Family/0.jpg"),
+      require("./Explore/Family/1.jpg"),
+      require("./Explore/Family/2.jpg"),
+      require("./Explore/Family/3.jpg"),
+    ],
+    sightseeing: [
+      require("./Explore/Sightseeing/0.jpg"),
+      require("./Explore/Sightseeing/1.jpg"),
+      require("./Explore/Sightseeing/2.jpg"),
+      require("./Explore/Sightseeing/3.jpg"),
+      require("./Explore/Sightseeing/4.jpg"),
+    ],
+    romantic: [
+      require("./Explore/Romantic/0.jpg"),
+      require("./Explore/Romantic/1.jpg"),
+      require("./Explore/Romantic/2.jpg"),
+      require("./Explore/Romantic/3.jpg"),
+    ],
+  },
+  trips: {
+    upcoming: [
+      require("./Explore/Family/0.jpg"),
+      require("./Explore/Family/1.jpg"),
+      require("./Explore/Family/2.jpg"),
+      require("./Explore/Family/3.jpg"),
+    ],
+    past: [
+      require("./Explore/Sightseeing/0.jpg"),
+      require("./Explore/Sightseeing/1.jpg"),
+      require("./Explore/Sightseeing/2.jpg"),
+      require("./Explore/Sightseeing/3.jpg"),
+      require("./Explore/Sightseeing/4.jpg"),
+    ],
+  },
 };
