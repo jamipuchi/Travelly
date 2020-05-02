@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Text, View } from "react-native";
+import React, { Component } from "react";
+import { Platform, Text, Dimensions, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -16,6 +16,11 @@ import Trips from "./Views/Trips";
 import Settings from "./Views/Settings";
 import Select from "./Views/Select";
 import BlablaText from "./Views/BlablaText";
+import HomePage from "./Views/HomePage";
+import WebSearchResults from "./Views/WebSearchResults";
+import SelectedDetailsWeb from "./Views/SelectedDetailsWeb";
+import BlablaTextWeb from "./Views/BlablaTextWeb";
+import TripsWeb from "./Views/TripsWeb";
 
 const Stack = createStackNavigator();
 
@@ -126,10 +131,32 @@ function MyTabs() {
   );
 }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
-  );
+export default class App extends Component {
+  render() {
+    if (
+      Platform.OS === "web" &&
+      Dimensions.get("window").width > Dimensions.get("window").height
+    ) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Homepage" headerMode="none">
+            <Stack.Screen name="Homepage" component={HomePage} />
+            <Stack.Screen name="Search Results" component={WebSearchResults} />
+            <Stack.Screen
+              name="Selected Details"
+              component={SelectedDetailsWeb}
+            />
+            <Stack.Screen name="Blabla" component={BlablaTextWeb} />
+            <Stack.Screen name="Trips" component={TripsWeb} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    } else {
+      return (
+        <NavigationContainer>
+          <MyTabs />
+        </NavigationContainer>
+      );
+    }
+  }
 }

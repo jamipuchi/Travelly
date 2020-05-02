@@ -10,18 +10,20 @@ import {
   Platform,
 } from "react-native";
 import images from "../assets/images";
-import TripCard from "./Cards/TripCard";
+import WebHeader from "./WebHeader";
+import TripCardWeb from "./Cards/TripCardWeb";
+import WebFooter from "./WebFooter";
 
 const trips = {
   upcoming: ["Rome", "Paris", "Venice", "Barcelona"],
   past: ["Salzburg", "Bangkok", "Singapore", "Dubai", "New York"],
 };
 
-export default class Trips extends Component {
+export default class TripsWeb extends Component {
   renderExplore(list, photos, opacity) {
     return list.map((item, i) => {
       return (
-        <TripCard
+        <TripCardWeb
           photo={photos[i]}
           cityName={item}
           opacity={opacity}
@@ -34,17 +36,31 @@ export default class Trips extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeAreaView}>
-        <View style={styles.headerText}>
-          <Text style={styles.headerTitle}>Trips</Text>
-        </View>
         <ScrollView>
-          <Text style={styles.sectionTitle}>Upcoming</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-            {this.renderExplore(trips.upcoming, images.trips.upcoming, false)}
-          </View>
-          <Text style={styles.sectionTitle}>Past</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-            {this.renderExplore(trips.past, images.trips.past, true)}
+          <WebHeader navigation={this.props.navigation} />
+          <View
+            style={{
+              maxWidth: 1200,
+              width: "100%",
+              alignSelf: "center",
+            }}
+          >
+            <View style={styles.headerText}>
+              <Text style={styles.headerTitle}>Trips</Text>
+            </View>
+            <Text style={styles.sectionTitle}>Upcoming</Text>
+            <View
+              style={{ flexDirection: "row", flexWrap: "wrap", width: "100%" }}
+            >
+              {this.renderExplore(trips.upcoming, images.trips.upcoming, false)}
+            </View>
+            <Text style={styles.sectionTitle}>Past</Text>
+            <View
+              style={{ flexDirection: "row", flexWrap: "wrap", width: "100%" }}
+            >
+              {this.renderExplore(trips.past, images.trips.past, true)}
+            </View>
+            <WebFooter navigation={this.props.navigation} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -54,8 +70,8 @@ export default class Trips extends Component {
 
 const styles = StyleSheet.create({
   headerText: {
-    marginLeft: 20,
-    marginTop: 20,
+    justifyContent: "center",
+    alignSelf: "center",
   },
   headerTitle: {
     fontSize: 30,
@@ -63,9 +79,8 @@ const styles = StyleSheet.create({
   card: {
     marginTop: 20,
     marginBottom: 20,
-    marginLeft: "6.5%",
     height: Dimensions.get("window").width * 0.5,
-    width: "40%",
+    width: 400,
     backgroundColor: "white",
     borderRadius: 10,
     shadowColor: "#000",
@@ -81,10 +96,10 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    marginLeft: 20,
     marginTop: 20,
   },
   safeAreaView: {
+    alignSelf: "center",
     flex: 1,
     ...Platform.select({
       ios: {

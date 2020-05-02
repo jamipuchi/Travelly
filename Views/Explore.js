@@ -7,6 +7,7 @@ import {
   ScrollView,
   StatusBar,
   ImageBackground,
+  Platform,
 } from "react-native";
 import images from "../assets/images";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -102,5 +103,24 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight + 5,
       },
     }),
+  },
+  card: {
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 20,
+    height: 300,
+    width: 250,
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
+    backgroundColor: "black",
   },
 });

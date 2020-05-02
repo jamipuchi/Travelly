@@ -6,24 +6,13 @@ import Checkbox from "./Checkbox";
 export default class FlightCardSelectable extends Component {
   render() {
     return (
-      <TouchableOpacity
-        onPress={() =>
-          this.props.navigation.push("Flight Details", {
-            flightName: this.props.name,
-            flightPrice: this.props.price,
-            flightId: this.props.id,
-            airport: this.props.airport,
-            class: this.props.class,
-          })
-        }
-        style={styles.card}
-      >
+      <TouchableOpacity onPress={this.props.onPress} style={styles.card}>
         <View style={styles.hotelInfo}>
           <View style={styles.airlineName}>
             <Text>{this.props.name}</Text>
           </View>
         </View>
-        <View style={{marginTop: 60}}>
+        <View style={{ marginTop: 60 }}>
           <FlightInfos />
         </View>
 

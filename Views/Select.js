@@ -6,6 +6,7 @@ import {
   StatusBar,
   SafeAreaView,
   TouchableOpacity,
+  Platform
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import IconF from "react-native-vector-icons/Ionicons";

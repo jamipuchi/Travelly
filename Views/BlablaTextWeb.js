@@ -6,35 +6,27 @@ import {
   StatusBar,
   SafeAreaView,
   TouchableOpacity,
-  Platform
+  Platform,
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import IconF from "react-native-vector-icons/Ionicons";
 import { ScrollView } from "react-native-gesture-handler";
+import WebHeader from "./WebHeader";
+import WebFooter from "./WebFooter";
 
-export default class BlablaText extends Component {
+export default class BlablaTextWeb extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeAreaView}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.props.navigation.pop()}
-          >
-            <Icon
-              style={styles.backButton}
-              name="chevron-left"
-              size={40}
-              color="black"
-            />
-          </TouchableOpacity>
-          <View style={styles.headerText}>
-            <Text style={styles.headerTitle}>
-              {this.props.route.params.name}
-            </Text>
+        <View>
+          <WebHeader navigation={this.props.navigation} />
+          <View style={styles.header}>
+            <View style={styles.headerText}>
+              <Text style={styles.headerTitle}>
+                {this.props.route.params.name}
+              </Text>
+            </View>
           </View>
-        </View>
-        <ScrollView>
           <Text style={styles.text}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
             dictum, felis nec consectetur aliquam, neque magna gravida diam, ut
@@ -112,7 +104,8 @@ export default class BlablaText extends Component {
             tempor ut ipsum ut, facilisis mollis nunc. Pellentesque malesuada
             arcu in risus vulputate vulputate et eu erat.
           </Text>
-        </ScrollView>
+          <WebFooter navigation={this.props.navigation} />
+        </View>
       </SafeAreaView>
     );
   }
@@ -146,6 +139,9 @@ const styles = StyleSheet.create({
   },
 
   safeAreaView: {
+    maxWidth: 1200,
+    width: "100%",
+    alignSelf: "center",
     flex: 1,
     ...Platform.select({
       ios: {

@@ -65,4 +65,10 @@ export default {
       require("./Explore/Sightseeing/4.jpg"),
     ],
   },
+  reasons: [
+    require("./Reasons/0.png"),
+    require("./Reasons/1.png"),
+    require("./Reasons/2.png"),
+  ],
+  band: require("./band.png")
 };

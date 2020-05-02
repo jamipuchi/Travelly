@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  Platform,
   ImageBackground,
   SafeAreaView,
 } from "react-native";
@@ -90,6 +90,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     marginTop: 80,
+    ...Platform.select({
+      ios: {
+        marginLeft: 20,
+        marginRight: 20,
+      },
+    }),
   },
   autocompleteContainer: {
     borderRadius: 10,
@@ -141,7 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingTop: 5,
     paddingBottom: 5,
-
   },
   image: {
     flex: 1,

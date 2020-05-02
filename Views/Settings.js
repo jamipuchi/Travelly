@@ -6,8 +6,7 @@ import {
   Text,
   ScrollView,
   StatusBar,
-  Dimensions,
-  Button,
+  Platform,
   Image,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";

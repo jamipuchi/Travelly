@@ -21,6 +21,11 @@ import FlightCardSelectable from "./Cards/FlightCardSelectable";
 import Checkbox from "./Cards/Checkbox";
 import TicketCardSelectable from "./TicketCardSelectable";
 import FilterPill from "./Cards/FilterPill";
+import WebFooter from "./WebFooter";
+import WebHeader from "./WebHeader";
+import HotelDetailsWeb from "./HotelDetailsWeb";
+import TicketDetailsWeb from "./TicketDetailsWeb";
+import FlightDetailsWeb from "./FlightDetailsWeb";
 
 export default class SearchResults extends Component {
   constructor(props) {
@@ -32,6 +37,7 @@ export default class SearchResults extends Component {
       flightPills: [],
       hotelPills: [],
       ticketPills: [],
+      overlayView: null,
     };
     this.selectHotel = this.selectHotel.bind(this);
     this.selectFlight = this.selectFlight.bind(this);
@@ -130,14 +136,22 @@ export default class SearchResults extends Component {
             navigation={s.props.navigation}
             image={images.hotels[item.id]}
             onSelected={s.selectHotel}
-            onPress={() =>
-              s.props.navigation.push("Hotel Details", {
-                hotelName: item.name,
-                price: item.price,
-              })
-            }
             selected={selected}
             i={i}
+            onPress={() =>
+              s.setState({
+                overlayView: (
+                  <HotelDetailsWeb
+                    route={{
+                      params: { hotelName: item.name, hotelPrice: item.price },
+                    }}
+                    onClose={() => {
+                      s.setState({ overlayView: null });
+                    }}
+                  />
+                ),
+              })
+            }
           />
         );
       });
@@ -164,12 +178,23 @@ export default class SearchResults extends Component {
             navigation={s.props.navigation}
             onSelected={s.selectFlight}
             onPress={() =>
-              s.props.navigation.push("Flight Details", {
-                flightName: item.name,
-                flightPrice: item.price,
-                flightId: item.id,
-                airport: s.props.route.params.iataCode,
-                class: item.class,
+              s.setState({
+                overlayView: (
+                  <FlightDetailsWeb
+                    route={{
+                      params: {
+                        flightName: item.name,
+                        flightPrice: item.price,
+                        flightId: item.id,
+                        airport: s.props.route.params.iataCode,
+                        class: item.class,
+                      },
+                    }}
+                    onClose={() => {
+                      s.setState({ overlayView: null });
+                    }}
+                  />
+                ),
               })
             }
           />
@@ -198,10 +223,21 @@ export default class SearchResults extends Component {
             navigation={s.props.navigation}
             onSelected={s.selectTicket}
             onPress={() =>
-              s.props.navigation.push("Ticket Details", {
-                ticketName: item.name,
-                ticketPrice: item.price,
-                ticketId: item.id,
+              s.setState({
+                overlayView: (
+                  <TicketDetailsWeb
+                    route={{
+                      params: {
+                        ticketName: item.name,
+                        ticketPrice: item.price,
+                        ticketId: item.id,
+                      },
+                    }}
+                    onClose={() => {
+                      s.setState({ overlayView: null });
+                    }}
+                  />
+                ),
               })
             }
           />
@@ -230,28 +266,42 @@ export default class SearchResults extends Component {
             <Icon name="shopping-cart" size={20} color="white" />
           </TouchableOpacity>
         )}
-
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.props.navigation.pop()}
+        {this.state.overlayView != null && (
+          <View
+            style={{
+              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "absolute",
+              zIndex: 5000,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              top: 0,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <Icon
-              style={styles.backButton}
-              name="chevron-left"
-              size={30}
-              color="black"
-            />
-          </TouchableOpacity>
-          <View style={styles.headerText}>
-            <Text style={styles.headerTitle}>{city}</Text>
-            <Text style={styles.headerSubTitle}>{country}</Text>
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "100%",
+                height: "100%",
+                maxWidth: 1000,
+                maxHeight: 900,
+                borderRadius: 10,
+              }}
+            >
+              {this.state.overlayView}
+            </View>
           </View>
-          <View />
-        </View>
+        )}
         <View style={{ flex: 1 }}>
           <ScrollView style={styles.container}>
-            <View style={{ flexDirection: "row" }}>
+            <WebHeader navigation={this.props.navigation} />
+            <View style={styles.headerText}>
+              <Text style={styles.headerTitle}>{city}</Text>
+              <Text style={styles.headerSubTitle}>{country}</Text>
+            </View>
+            <View style={styles.sectionTitleContainer}>
               <Text style={styles.sectionTitle}>Flights</Text>
               {[
                 { name: "Economy", label: "economy" },
@@ -272,7 +322,7 @@ export default class SearchResults extends Component {
               {this.renderFlights(this)}
               <View style={{ width: 20 }} />
             </ScrollView>
-            <View style={{ flexDirection: "row" }}>
+            <View style={styles.sectionTitleContainer}>
               <Text style={styles.sectionTitle}>Hotels</Text>
               {[
                 { name: "Family", label: "family" },
@@ -295,7 +345,7 @@ export default class SearchResults extends Component {
               {this.renderHotels(this)}
               <View style={{ width: 20 }} />
             </ScrollView>
-            <View style={{ flexDirection: "row" }}>
+            <View style={styles.sectionTitleContainer}>
               <Text style={styles.sectionTitle}>Tickets</Text>
               {[
                 { name: "Museum", label: "museum" },
@@ -318,6 +368,7 @@ export default class SearchResults extends Component {
               <View style={{ width: 20 }} />
             </ScrollView>
             <View height={20} />
+            <WebFooter  navigation={this.props.navigation} />
           </ScrollView>
         </View>
       </SafeAreaView>
@@ -338,6 +389,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     marginRight: 50,
+    marginBottom: 50,
   },
   headerTitle: {
     flexGrow: 1,
@@ -345,20 +397,23 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   headerSubTitle: {
+    marginTop: 10,
     flexGrow: 1,
     fontSize: 15,
     color: "gray",
     textAlign: "center",
   },
-  container: {
-    marginTop: 20,
-  },
+  container: {},
   cardsContainer: {
     paddingRight: 20,
+    maxWidth: 1200,
+    width: "100%",
+    alignSelf: "center",
   },
   sectionTitle: {
     marginLeft: 20,
     fontSize: 20,
+    alignSelf: "flex-start",
   },
   buyButton: {
     position: "absolute",
@@ -394,5 +449,11 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight + 5,
       },
     }),
+  },
+  sectionTitleContainer: {
+    flexDirection: "row",
+    maxWidth: 1200,
+    alignSelf: "center",
+    width: "100%",
   },
 });

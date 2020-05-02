@@ -14,13 +14,7 @@ export default class TicketCardSelectable extends Component {
     return (
       <TouchableOpacity
         style={styles.card}
-        onPress={() =>
-          this.props.navigation.push("Ticket Details", {
-            ticketName: this.props.name,
-            ticketPrice: this.props.price,
-            ticketId: this.props.id,
-          })
-        }
+        onPress={this.props.onPress}
       >
         <ImageBackground source={this.props.image} style={styles.hotelImage}>
           <View style={styles.hotelInfo}>

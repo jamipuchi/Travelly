@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     overflow: "hidden",
-    height: "85%",
+    height: "75%",
     width: "100%",
   },
   price: {

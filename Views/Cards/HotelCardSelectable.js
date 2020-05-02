@@ -12,15 +12,7 @@ import CheckBox from "./Checkbox";
 export default class HotelCardSelectable extends Component {
   render() {
     return (
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() =>
-          this.props.navigation.push("Hotel Details", {
-            hotelName: this.props.name,
-            price: this.props.price,
-          })
-        }
-      >
+      <TouchableOpacity style={styles.card} onPress={this.props.onPress}>
         <ImageBackground source={this.props.image} style={styles.hotelImage}>
           <View style={styles.hotelInfo}>
             <View style={styles.hotelName}>
